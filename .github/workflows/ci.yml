@@ -56,31 +56,11 @@ jobs:
         
       - name: Run Tests
         run: pytest .
-  build_and_push:
-    name: Containerize and Release
-    runs-on: ubuntu-latest
-    needs: [lint_code, test_code]
+  #build_and_push:
+  #  name: Containerize and Release
+  #  runs-on: ubuntu-latest
+  #  needs: [lint_code, test_code]
 
 
 
-  continues_integration:
-    runs-on: ubuntu-latest
   
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        
-      - name: Set up Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-          
-      - name: Install Python dependencies
-        run: pip install black flake8
-      
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          black: true
-          flake8: true
-          continue_on_error: false
