@@ -79,6 +79,9 @@ jobs:
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
+        with:
+          images: daniellettner/e-arts
+          
         
       - name: Build and Push New Release
         run: |
