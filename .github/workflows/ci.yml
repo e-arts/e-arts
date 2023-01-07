@@ -55,7 +55,7 @@ jobs:
         run: pip install pytest
         
       - name: Run Tests
-        run: pytest .
+        run: pytest test/test.py
   #build_and_push:
   #  name: Containerize and Release
   #  runs-on: ubuntu-latest
