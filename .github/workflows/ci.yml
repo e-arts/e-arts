@@ -27,6 +27,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      
+      - name: Install requirement txt
+        run: pip install -r requirements.txt
           
       - name: Install Linting frameworks
         run: pip install black flake8
@@ -50,6 +53,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      
+      - name: Install requirement txt
+        run: pip install -r requirements.txt
   
       - name: Install Testing frameworks
         run: pip install pytest
@@ -69,6 +75,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+          
+      - name: Install requirement txt
+        run: pip install -r requirements.txt
           
       # Declare variables to store branch name and short Git commit SHA
       - name: Declare variables
