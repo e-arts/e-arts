@@ -62,6 +62,7 @@ jobs:
         
       - name: Run Tests
         run: pytest test/test.py
+        
   build_and_push:
     name: Containerize and Release
     runs-on: ubuntu-latest
@@ -70,25 +71,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-          
-      - name: Install requirement txt
-        run: pip install -r requirements.txt
-          
-      # Declare variables to store branch name and short Git commit SHA
-      - name: Declare variables
-        id: vars
-        shell: bash
-        run: |
-          echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
-          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
         
       # Login to DockerHub account
       - name: Login to DockerHub
@@ -98,10 +83,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       # Build a Docker image based on provided Dockerfile
-      #- name: Build and push
-      #  id: docker_build
-      #  uses: docker/build-push-action@v2
-      #  with:
-      #    context: .
-      #    push: true
-      #    tags: [user]/app:${{ steps.vars.outputs.sha_short }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: user/app:latest
