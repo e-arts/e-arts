@@ -1,4 +1,6 @@
-import os
-import typing
+def plus(x: int, y: int) -> int:
+    return x + y
 
-print("Hello World");
+
+def test_plus():
+    assert plus(2, 1) == 3
