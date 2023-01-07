@@ -15,15 +15,66 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  run-linter:
-    name: Linter
+  lint_code:
+    name: Code linting
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          
+      - name: Install Linting frameworks
+        run: pip install black flake8
+      
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          black: true
+          flake8: true
+          continue_on_error: false
+      
+  test_code:
+    name: Code testing
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+  
+      - name: Install Testing frameworks
+        run: pip install pytest
+        
+      - name: Run Tests
+        run: pytest .
+  build_and_push:
+    name: Containerize and Release
+    runs-on: ubuntu-latest
+    needs: [lint_code, test_code]
+
+
+
+  continues_integration:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
+          
       - name: Install Python dependencies
         run: pip install black flake8
       
