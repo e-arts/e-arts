@@ -1,4 +1,4 @@
-# e-arts (https://igboie.medium.com/kubernetes-ci-cd-with-github-github-actions-and-argo-cd-36b88b6bda64)
+# e-arts 
 
 ## Proposal
 
@@ -15,3 +15,6 @@ The pipeline is building in the following way:
 ## GitOps Workflow (desired state)
 
 ![GitOpsWorkflow](/ressources/GitOpsWorkflow.png)
+
+## Sources
+* https://igboie.medium.com/kubernetes-ci-cd-with-github-github-actions-and-argo-cd-36b88b6bda64
