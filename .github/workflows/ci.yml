@@ -98,6 +98,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           
+      - run: |
+          echo "first tag: ${{ steps.meta.outputs.tags[0] }}, all tags: steps.meta.outputs.tags"
+          
       # change config repository
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
