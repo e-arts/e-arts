@@ -1,4 +1,4 @@
-# e-arts
+# e-arts (https://igboie.medium.com/kubernetes-ci-cd-with-github-github-actions-and-argo-cd-36b88b6bda64)
 
 ## Proposal
 
