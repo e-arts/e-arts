@@ -97,3 +97,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+      # change config repository
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PAT }}
+          repository: e-arts/e-arts-config
+          event-type: new-image
+          client-payload: '{"image": "daniellettner/e-arts:${{ steps.meta.outputs.tags }}"}'
