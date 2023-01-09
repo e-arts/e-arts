@@ -98,14 +98,18 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           
+      - name: get release tag
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      
       - run: |
-          echo "first tag: ${{steps.meta.outputs.tags[0]}}, all tags: ${{steps.meta.outputs.tags}}"
+          echo ${{ steps.vars.outputs.tag }}
           
       # change config repository
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.PAT }}
-          repository: e-arts/e-arts-config
-          event-type: new-image
-          client-payload: '{"image": "${{ steps.meta.outputs.tags[0] }}"}'
+      #- name: Repository Dispatch
+      # uses: peter-evans/repository-dispatch@v1
+      #  with:
+      #    token: ${{ secrets.PAT }}
+      #    repository: e-arts/e-arts-config
+      #    event-type: new-image
+      #    client-payload: '{"image": "${{ steps.meta.outputs.tags[0] }}"}'
