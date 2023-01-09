@@ -73,7 +73,7 @@ jobs:
         
       - name: Run Tests
         run: pytest test/test.py
-        
+    
   build_and_push:
     name: Containerize and Release
     runs-on: ubuntu-latest
@@ -82,13 +82,6 @@ jobs:
     if: github.event_name == 'release' && github.event.release.prerelease == false
     
     steps:
-      - run: |
-          echo ${{github.event}}
-          echo ${{github.event_name}}
-          echo ${{github.event.prerelease}}
-          echo ${{github.event.release.prerelease}}
-          echo ${{github.event.release.prereleased}}
-    
       - name: Checkout repository
         uses: actions/checkout@v3
         
@@ -117,12 +110,22 @@ jobs:
       - name: get release tag
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-          
-      # change config repository
-      - name: Repository Dispatch
+        
+      - name: Repository Dispatch - Staging
+        # always update the staging environment
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PAT }}
-          repository: e-arts/e-arts-config
+          repository: e-arts/e-arts-config-staging
           event-type: new-image
           client-payload: '{"image": "daniellettner/e-arts:${{ steps.vars.outputs.tag }}"}'
+      
+      - name: Repository Dispatch - Production
+        if: github.event.release.prerelease == false
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PAT }}
+          repository: e-arts/e-arts-config-prod
+          event-type: new-image
+          client-payload: '{"image": "daniellettner/e-arts:${{ steps.vars.outputs.tag }}"}'
+          
