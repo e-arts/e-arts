@@ -78,8 +78,8 @@ jobs:
     name: Containerize and Release
     runs-on: ubuntu-latest
     needs: [lint_code, test_code]
-    if: startsWith(github.event.ref, 'refs/tags/v')
-    #if: github.event_name == 'release' && github.event.prerelease == false
+    #if: startsWith(github.event.ref, 'refs/tags/v')
+    if: github.event_name == 'release' && github.event.prerelease == false
     
     steps:
       - run: |
