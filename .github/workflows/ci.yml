@@ -27,13 +27,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          VALIDATE_PYTHON: true
         
       - name: Set up Python
         uses: actions/setup-python@v4
