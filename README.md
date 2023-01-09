@@ -2,6 +2,12 @@
 
 ## Proposal
 
+Used Components:
+- ArgoCD
+- Kubernetes
+- Github/ Github Actions
+- Google Cloud
+
 The goal is to implement a CI/CD Pipeline for the e-arts project. Changes to the main branch or adding a tag should result in tirggering the CI Pipeline. The pipeline consists of linting the project via flake8 and black. Parallel to linting the project a step for testing the project is executed. If the pipeline is triggered by adding a release tag the pipeline furthermore builds a new docker images and pushes it onto dockerhub. If release is tagged as prerelease the new Image version is written to the staging environment, otherwise the image is written to the production environment. There are 2 Kubernetes Cluster availabel: one for production and one for staging. Both have ArgoCD installed which is pointing to either the staging or production git repository. Release a new version of the "software" results in updating the environments.
  
 The pipeline is building in the following way:
