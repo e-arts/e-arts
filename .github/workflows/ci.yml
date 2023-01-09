@@ -21,31 +21,33 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   lint_code:
-    if: github.event_name != 'release'
     name: Code linting
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      
+      - name: Lint Code Base
+        uses: github/super-linter@v4
         
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
+      #- name: Set up Python
+      #  uses: actions/setup-python@v4
+      #  with:
+      #    python-version: 3.8
       
-      - name: Install requirement txt
-        run: pip install -r requirements.txt
+      #- name: Install requirement txt
+      #  run: pip install -r requirements.txt
           
-      - name: Install Linting frameworks
-        run: pip install black flake8
+      #- name: Install Linting frameworks
+      #  run: pip install black flake8
       
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          black: true
-          flake8: true
-          continue_on_error: false
+      #- name: Run linters
+      #  uses: wearerequired/lint-action@v2
+      #  with:
+      #    black: true
+      #    flake8: true
+      #    continue_on_error: false
       
   test_code:
     name: Code testing
@@ -72,7 +74,7 @@ jobs:
   build_and_push:
     name: Containerize and Release
     runs-on: ubuntu-latest
-    needs: [test_code]
+    needs: [lint_code, test_code]
     #if: startsWith(github.event.ref, 'refs/tags/v')
     if: github.event_name == 'release' && github.event.prerelease == false
     
