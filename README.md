@@ -18,3 +18,39 @@ The pipeline is building in the following way:
 
 ## Sources
 * https://igboie.medium.com/kubernetes-ci-cd-with-github-github-actions-and-argo-cd-36b88b6bda64
+
+
+## Setup of ArgoCD Deployment in Kubernetes
+
+Setup can be used by local deployment such as Minikube oder Docker Desktop
+
+1. Install ArgoCD
+```
+ kubectl create namespace argocd
+ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+ ```
+
+2. Open Port to ArgoCD on local machine
+```
+ kubectl port-forward svc/argocd-server -n argocd 8080:443
+ ```
+
+3. Get username and password: according to documentation username = admin
+```
+ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=”{.data.password}” | base64 -d; echo
+```
+
+4. Browse to http://localhost:8080 to access ArgoUI
+
+Configure ArgoCD to track the config repository.
+
+1. Checkout the e-arts-config git repository
+2. Apply the application.yaml to setup the tracking and deploy app
+```
+ kubectl apply -f application.yaml
+ ```
+3. Test if application is working (Port should match to flask app)
+```
+ kubectl port-forward svc/node-app-service 3000:3000 -n node-app
+ ```
+4. Browse to http://localhost:3000 to access the flask app
