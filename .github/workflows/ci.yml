@@ -78,10 +78,17 @@ jobs:
     name: Containerize and Release
     runs-on: ubuntu-latest
     needs: [lint_code, test_code]
-    #if: startsWith(github.event.ref, 'refs/tags/v')
-    if: github.event_name == 'release' && github.event.prerelease == false
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    #if: github.event_name == 'release' && github.event.prerelease == false
     
     steps:
+      - run: |
+          echo ${{github.event}}
+          echo ${{github.event_name}}
+          echo ${{github.event.prerelease}}
+          echo ${{github.event.release.prerelease}}
+          echo ${{github.event.release.prereleased}}
+    
       - name: Checkout repository
         uses: actions/checkout@v3
         
