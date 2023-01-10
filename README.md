@@ -17,8 +17,9 @@
 
 ### Milestones:
 - CI Pipeline 13.01.2023
-- Kubernetes Environments are setup in Google Cloud (17.01.2023)
-- Automatical deployment via ArgoCD is deployed in the environments (20.01.2023)
+- Kubernetes Environments are setup in Google Cloud 17.01.2023
+- Automatical deployment via ArgoCD is deployed in the environments 20.01.2023
+- Presentation of results 24.01.2023
 
 ### Description of desired state
 
