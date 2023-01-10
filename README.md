@@ -2,11 +2,25 @@
 
 ## Proposal
 
-Used Components:
+### Used Technologies:
 - ArgoCD
 - Kubernetes
 - Github/ Github Actions
 - Google Cloud
+- Dockerhub
+- Docker
+
+### Responsabilities
+- Setup of staging and production environment in GKE (@Phillipe Sanio)
+- Setup of CI Pipeline (linting, testing) and using (pre-)release capabilities of Github to alter the configuration repositories (@Daniel Lettner)
+- Setup of ArgoCD environments in the the staging and production environment to automatically deploy the new (pre-)release versions (@Jakob Pühringer)
+
+### Milestones:
+- CI Pipeline 13.01.2023
+- Kubernetes Environments are setup in Google Cloud (17.01.2023)
+- Automatical deployment via ArgoCD is deployed in the environments (20.01.2023)
+
+### Description of desired state
 
 The goal is to implement a CI/CD Pipeline for the e-arts project. Changes to the main branch or adding a tag should result in tirggering the CI Pipeline. The pipeline consists of linting the project via flake8 and black. Parallel to linting the project a step for testing the project is executed. If the pipeline is triggered by adding a release tag the pipeline furthermore builds a new docker images and pushes it onto dockerhub. If release is tagged as prerelease the new Image version is written to the staging environment, otherwise the image is written to the production environment. There are 2 Kubernetes Cluster availabel: one for production and one for staging. Both have ArgoCD installed which is pointing to either the staging or production git repository. Release a new version of the "software" results in updating the environments.
  
@@ -15,10 +29,10 @@ The pipeline is building in the following way:
 2. linting the proect. 
 3. testing the project via pytest 
 4. building a docker image and pushing it to Dockerhub --> after completion, automatic changes in the infrastructure repo
-5. ArgoCD detects changes in the repo and syncs the new desired state
+5. ArgoCD detects changes in the config-repo and syncs the new desired state
 6. release of the new version in Kubernetes
 
-## GitOps Workflow (desired state)
+#### GitOps Workflow 
 
 ![GitOpsWorkflow](/ressources/GitOpsWorkflow.png)
 
