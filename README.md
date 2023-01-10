@@ -16,10 +16,10 @@
 - Setup of ArgoCD environments in the the staging and production environment to automatically deploy the new (pre-)release versions (@Jakob Pühringer)
 
 ### Milestones:
-- CI Pipeline 13.01.2023
-- Kubernetes Environments are setup in Google Cloud 17.01.2023
-- Automatical deployment via ArgoCD is deployed in the environments 20.01.2023
-- Presentation of results 24.01.2023
+- CI Pipeline
+- Kubernetes Environments are setup in Google Cloud
+- Automatical deployment via ArgoCD is deployed in the environments
+- Presentation of results incl. live demo
 
 ### Description of desired state
 
