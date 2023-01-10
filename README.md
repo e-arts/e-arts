@@ -72,6 +72,6 @@ Configure ArgoCD to track the config repository.
  ```
 3. Test if application is working (Port should match to flask app)
 ```
- kubectl port-forward svc/node-app-service 3000:3000 -n node-app
+ kubectl port-forward svc/e-arts-app-service 3000:3000 -n e-arts-app
  ```
 4. Browse to http://localhost:3000 to access the flask app
