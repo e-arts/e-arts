@@ -10,7 +10,7 @@
 - Dockerhub
 - Docker
 
-### Responsabilities
+### Responsibilities
 - Setup of staging and production environment in GKE (@Phillipe Sanio)
 - Setup of CI Pipeline (linting, testing) and using (pre-)release capabilities of Github to alter the configuration repositories (@Daniel Lettner)
 - Setup of ArgoCD environments in the the staging and production environment to automatically deploy the new (pre-)release versions (@Jakob Pühringer)
