@@ -77,12 +77,11 @@ jobs:
         run: pytest test/test.py
     
   build_and_push:
-    if: github.repository == 'main'
     name: Containerize and Release
     runs-on: ubuntu-latest
     needs: [lint_code, test_code]
     #if: startsWith(github.event.ref, 'refs/tags/v')
-    if: github.event_name == 'release'
+    if: (github.event_name == 'release') && (github.repository == 'main')
     
     steps:
       - name: Checkout repository
