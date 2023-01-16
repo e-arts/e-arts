@@ -1,6 +1,4 @@
-# e-arts 
-
-## Proposal
+# Introduction
 
 ### Used Technologies:
 - ArgoCD
@@ -37,20 +35,22 @@ The pipeline is building in the following way:
 
 ![GitOpsWorkflow](/ressources/GitOpsWorkflow.png)
 
-# Github Workflow (@Daniel Lettner) - Guide through the galaxy
+# Implementation
+
+## Github Workflow (@Daniel Lettner)
 
 <img width="800s" alt="image" src="https://user-images.githubusercontent.com/48688085/212743260-51134571-592f-49d0-bc2a-14b5cdfb6cd8.png">
 
 In the heart of the CI pipeline is the Github Workflow. On every push or pull request the code gets automatically testet and linted in parallel. The linting process is done via _Black_ and _Flake8_ and the testing is done via _pytest_. In case of an error the actor (user who triggered the workflow) will be notified via e-mail. Furthermore we leverage github releases to automatically deploy the new state of the application via docker and use repository dispatches to change the image version in the respective configuration repositories.
 
-## 1. Create repositories
+### 1. Create repositories
 
    * create a code repository ```e-arts```
    * create 2 configuration repositories ```e-arts-prod``` and ```e-arts-staging```
 
-## 2. Setup of code repository ```e-arts```
+### 2. Setup of code repository ```e-arts```
 
-### Create file ```main.py```
+#### Create file ```main.py```
 
 ```python
 from flask import Flask
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
 ```
 
-### Create ```requirement.txt```
+#### Create ```requirement.txt```
 
 ```txt
 click==8.1.3
@@ -79,7 +79,7 @@ Werkzeug==2.2.2
 zipp==3.11.0
 ```
 
-### Create dummy testing file under ```test/test.py```
+#### Create dummy testing file under ```test/test.py```
 
 ```python
 def plus(x: int, y: int) -> int:
@@ -89,7 +89,7 @@ def test_plus():
     assert plus(2, 1) == 3
 ```
 
-### Create Dockerfile
+#### Create Dockerfile
 
 ```Dockerfile
 FROM python:3.8-alpine
@@ -107,14 +107,14 @@ ENTRYPOINT [ "python" ]
 CMD ["main.py" ]
 ```
 
-### Create secrets
+#### Create secrets
 Secrets can be created under Settings --> Security --> Actions --> New repository secret. The following secrets need to be added for the workflow to work as intended.
 
    * DOCKERHUB_USERNAME (```Dockerhub username ```)
    * DOCKERHUB_TOKEN (```Dockerhub password```)
    * PAT (```Personal access token```, how to can be read under [Create personal access token](https://docs.github.com/de/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token))
 
-### Create Github workflow
+#### Create Github workflow
 
 <details>
   <summary>Toggle full workflow.yaml</summary>
@@ -255,7 +255,7 @@ on:
 ```
 The workflow should be triggerable via ```push``` or ```pull request``` from any branch. This will be the backbone of the CI pipeline. Furthermore the workflow also listens to the ```github release event```.
 
-### lint code job
+#### lint code job
 
 ```yaml
  lint_code:
@@ -291,7 +291,7 @@ Detailed explanation:
 3. The process installed the dependencies (Python, packages listed in requirement.txt and the linting packages _Black_ and _Flake8_)
 4. The process executes flake8 and black on the root folder
 
-### test code job
+#### test code job
 
 ```yaml
 test_code:
@@ -324,7 +324,7 @@ Detailed explanation:
 4. The process executes pytest on the root folder
 
 
-### build and push image job
+#### build and push image job
 
 ```yaml
  build_and_push:
@@ -397,12 +397,12 @@ Detailed explanation:
 
 </details>
 
-## 3. Setup of configuration repositories ```e-arts-prod``` and ```e-arts-staging```
+### 3. Setup of configuration repositories ```e-arts-prod``` and ```e-arts-staging```
 
 Generally speaking ```e-arts-prod``` and ```e-arts-staging``` are setup exactly the same. The only difference between the 2 repositories is the ```repoURL```in the ```application.yaml``` file. 
 
 
-### Create ```application.yaml```
+#### Create ```application.yaml```
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -436,7 +436,7 @@ spec:
 * Pruning the application means that if Argo CD detects that the resource is no longer defined in Git. It will be automatically deleted in the Kubernetes Cluster.
 * Self heal means that if Argo CD detects that resources differ from the state declared in Git, it will automatically sync the resource and replace it with the state defined in Git. This prevents manual changes to resources and only allows the state of Git.
 
-### Create ```deployment.yaml``` under ```/dev``` folder
+#### Create ```deployment.yaml``` under ```/dev``` folder
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -462,7 +462,7 @@ spec:
 Defines the Deployment. It references the image of the container to be deployed and states the port which should be opened for the container. Furthermore it states that the deployment should have 3 replicas.
 
 
-### Create ```service.yaml``` under ```/dev``` folder
+#### Create ```service.yaml``` under ```/dev``` folder
 
 ```yaml
 apiVersion: v1
@@ -480,7 +480,7 @@ spec:
 
 Defines the service to be deployed. It references the resource defined in ```deployment.yaml``` via the app-selector. Furthermore it defines the port on witch the application should be available.
 
-## 4. Testing and triggering the Github pipeline
+### 4. Testing and triggering the Github pipeline
 
 
 <img width="1437" alt="image" src="https://user-images.githubusercontent.com/48688085/212766402-e14ae0bb-6291-4d06-8a35-425cb4ba4257.png">
@@ -512,14 +512,10 @@ spec:
           ports:
             - containerPort: 3000
 ```
- 
-<img width="725" alt="image" src="https://user-images.githubusercontent.com/48688085/212767228-98d59836-3305-4504-ace6-24a25e065a68.png">
 
 
-
-
-# Argo CD
-# Deployment via Google Cloud (GKE)
+## Argo CD
+## Deployment via Google Cloud (GKE)
 
 
 
