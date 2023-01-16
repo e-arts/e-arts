@@ -46,6 +46,15 @@ jobs:
         
       - name: Run black
         run: black .
+        
+      - name: test
+        run: |
+          echo ${{ github.event_name }}
+          echo ${{ github.ref_name }}
+          echo $github.event_name
+          echo github.ref_name
+          echo github.event_name
+          echo ithub.ref_name
       
       #- name: Run linters
       #  uses: wearerequired/lint-action@v2
