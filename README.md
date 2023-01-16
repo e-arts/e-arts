@@ -39,7 +39,7 @@ The pipeline is building in the following way:
 
 ## Github Workflow (@Daniel Lettner)
 
-<img width="800s" alt="image" src="https://user-images.githubusercontent.com/48688085/212743260-51134571-592f-49d0-bc2a-14b5cdfb6cd8.png">
+<img width="920" alt="image" src="https://user-images.githubusercontent.com/48688085/212771191-f20ca274-fdbb-4801-8ed5-aea725737d12.png">
 
 In the heart of the CI pipeline is the Github Workflow. On every push or pull request the code gets automatically testet and linted in parallel. The linting process is done via _Black_ and _Flake8_ and the testing is done via _pytest_. In case of an error the actor (user who triggered the workflow) will be notified via e-mail. Furthermore we leverage github releases to automatically deploy the new state of the application via docker and use repository dispatches to change the image version in the respective configuration repositories.
 
