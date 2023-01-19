@@ -515,15 +515,18 @@ spec:
 
 
 ## Argo CD
-## Deployment via Google Cloud (GKE)
 
+Argo CD is used as a declarative, continuous delivery tool for Kubernetes and follows the GitOps pattern. The later means that
+Git repositories define the desired application state, e.g. when the Git repository differs in the state of the deployed
+application, the Git repository is seen as ground truth. Argo CD is a kubernetes controller in order to monitor the current state of our application and
+potentially sync it to the desired one (Live state is considered ```OutOfSync```).
 
+The CD-tool creates reports and deployments based on the monitoring so the user knows at all times, how the application's state is defined.
+Also, the target environments need to be specified, so automation of deployment can happen.
 
+The general workflow for setting up ArgoCD is desribed in the following:
 
-
-
-
-## Setup of ArgoCD Deployment in Kubernetes
+### Setup of ArgoCD Deployment in Kubernetes
 
 Setup can be used by local deployment such as Minikube oder Docker Desktop
 
@@ -532,11 +535,13 @@ Setup can be used by local deployment such as Minikube oder Docker Desktop
  kubectl create namespace argocd
  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
  ```
+ - This creates a new namespace where all further defined resources will live and install the CD tool.
 
 2. Open Port to ArgoCD on local machine
 ```
  kubectl port-forward svc/argocd-server -n argocd 8080:443
  ```
+ - Kubectl port-forwarding in order to access the UI
 
 3. Get username and password: according to documentation username = admin
 ```
@@ -557,3 +562,13 @@ Configure ArgoCD to track the config repository.
  kubectl port-forward svc/e-arts-app-service 3000:3000 -n e-arts-app
  ```
 4. Browse to http://localhost:3000 to access the flask app
+
+
+## Deployment via Google Cloud (GKE)
+
+
+
+
+
+
+
