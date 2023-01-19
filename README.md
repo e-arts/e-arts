@@ -21,7 +21,7 @@
 
 ### Description of desired state
 
-The goal is to implement a CI/CD Pipeline for the e-arts project. Changes to the main branch or adding a tag should result in tirggering the CI Pipeline. The pipeline consists of linting the project via flake8 and black. Parallel to linting the project a step for testing the project is executed. If the pipeline is triggered by adding a release tag the pipeline furthermore builds a new docker images and pushes it onto dockerhub. If release is tagged as prerelease the new Image version is written to the staging environment, otherwise the image is written to the production environment. There are 2 Kubernetes Cluster availabel: one for production and one for staging. Both have ArgoCD installed which is pointing to either the staging or production git repository. Release a new version of the "software" results in updating the environments.
+The goal is to implement a CI/CD Pipeline for the e-arts project. Changes to the main branch or adding a tag should result in tirggering the CI Pipeline. The pipeline consists of linting the project via flake8 and black. Parallel to linting the process for testing the project is executed. If the pipeline is triggered by adding a release tag, the pipeline furthermore builds a new docker images and pushes it onto dockerhub. If release is tagged as prerelease the new Image version is written to the staging environment, otherwise the image is written to the production environment. There are 2 Kubernetes Cluster available: one for production and one for staging. Both environments have ArgoCD installed which is pointing to either the staging or production git repository. Releasing a new version of the "software", results in updating the environments.
  
 The pipeline is building in the following way:
 1. push onto the main branch / creating a new tag
@@ -41,7 +41,7 @@ The pipeline is building in the following way:
 
 <img width="920" alt="image" src="https://user-images.githubusercontent.com/48688085/212771191-f20ca274-fdbb-4801-8ed5-aea725737d12.png">
 
-In the heart of the CI pipeline is the Github Workflow. On every push or pull request the code gets automatically testet and linted in parallel. The linting process is done via _Black_ and _Flake8_ and the testing is done via _pytest_. In case of an error the actor (user who triggered the workflow) will be notified via e-mail. Furthermore we leverage github releases to automatically deploy the new state of the application via docker and use repository dispatches to change the image version in the respective configuration repositories.
+The heart of the CI pipeline is the Github Workflow. On every push or pull request the code gets automatically tested and linted in parallel. The linting process is done via _Black_ and _Flake8_ and the testing is done via _pytest_. In case of an error the actor (user who triggered the workflow) will be notified via e-mail. Furthermore we leverage github releases to automatically deploy the new state of the application via docker and use repository dispatches to change the image version in the respective configuration repositories.
 
 ### 1. Create repositories
 
