@@ -583,7 +583,7 @@ gcloud init
 
 ![grafik](https://user-images.githubusercontent.com/56193448/214140269-3ecf57aa-d2c5-42e9-9fa2-b1edca0ded63.png)
 
-6. Repeat steps from [Setup of ArgoCD Deployment in Kubernetes](setupofargocddeploymentinkubernetes)
+6. Repeat steps from [Setup of ArgoCD Deployment in Kubernetes](setup-of-argocd-deployment-in-kubernetes)
 
 
 
