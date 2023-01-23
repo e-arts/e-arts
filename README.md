@@ -566,8 +566,19 @@ Configure ArgoCD to track the config repository.
 
 ## Deployment via Google Cloud (GKE)
 
-
-
+1. Install GKE and follow instructions: https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe
+2. Initialize GKE
+```
+gcloud init
+``` 
+4. Create Project and connect
+![grafik](https://user-images.githubusercontent.com/56193448/214138810-9b3366f7-4fef-4325-84c2-e9d46acfe754.png)
+6. Setup kubernetes cluster in Google Cloud
+![grafik](https://user-images.githubusercontent.com/56193448/214141040-c31f17b7-93fd-4893-806b-7beef0d8368c.png)
+7. Connect to cluster
+![grafik](https://user-images.githubusercontent.com/56193448/214140269-3ecf57aa-d2c5-42e9-9fa2-b1edca0ded63.png)
+-> copy and paste command into console
+8. Repeat steps from [Setup of ArgoCD Deployment in Kubernetes](#Setup of ArgoCD Deployment in Kubernetes)
 
 
 
