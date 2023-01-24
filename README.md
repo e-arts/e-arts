@@ -564,6 +564,11 @@ Configure ArgoCD to track the config repository.
  ```
 4. Browse to http://localhost:3000 to access the flask app
 
+After Deploying Argo CD the overview with the already added deployments can look something like this:
+![ARGO-CD-Overview](./ressources/argo-cd-overview.png)
+
+For example the deployment of the staging branch looks something like this, in which you can see all components for the specific deployment:
+![ARGO-CD-Staging](./ressources/argo-cd-staging-1.png)
 
 ## Deployment via Google Cloud (GKE)
 
