@@ -476,9 +476,10 @@ spec:
   - port: 3000
     protocol: TCP
     targetPort: 3000
+  type: LoadBalancer
 ```
 
-Defines the service to be deployed. It references the resource defined in ```deployment.yaml``` via the app-selector. Furthermore it defines the port on witch the application should be available.
+Defines the service to be deployed. It references the resource defined in ```deployment.yaml``` via the app-selector. Furthermore it defines the port on witch the application should be available. To save time and not have to forward the port of the pod to the service after each deployment the type of the service is specified as a load balancer. This has the effect of dynamically link new pods to the service under the specific port. 
 
 ### 4. Testing and triggering the Github pipeline
 
