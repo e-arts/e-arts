@@ -571,6 +571,7 @@ For example the deployment of the staging branch looks something like this, in w
 ![ARGO-CD-Staging](./ressources/argo-cd-staging-1.png)
 
 ## Deployment via Google Cloud (GKE)
+### Setup of staging and production environment in GKE @Phillipe Sanio
 
 Creating and connecting to the google Kubernetes engine (GKE) can be done in a few steps.
 To be able to connect to the GKE you need to install kubectl. This can be done either via a package manager or with
