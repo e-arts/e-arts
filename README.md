@@ -567,6 +567,13 @@ Configure ArgoCD to track the config repository.
 
 ## Deployment via Google Cloud (GKE)
 
+Creating and connecting to the google Kubernetes engine (GKE) can be done in a few steps.
+To be able to connect to the GKE you need to install kubectl. This can be done either via a package manager or with
+the GCloud installer from Google. Kubectl is used to interact with Kubernetes cluste, which has to be done via the Kubernetes API.
+Altough alternatives with a GUI like the program exist, we are using the CLI tool kubectl.
+
+To install kubectl you can use the offical [instructions](https://cloud.google.com/sdk/docs/install) provided by Google.
+
 1. Install GKE and follow instructions: https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe
 2. Initialize GKE
 ```
@@ -586,6 +593,48 @@ gcloud init
 
 6. Repeat steps from [Setup of ArgoCD Deployment in Kubernetes](#setup-of-argocd-deployment-in-kubernetes)
 
+You can view most Kubernetes related features like namespaces, pods, secrets, services, etc. in the WebUI. However, most of the features can be
+easily accessed by very short commands, which are often much faster than having to navigate through different menues in the WebUI.
 
+Comands that were useful during this deployment:
+
+If you are unsure to which Kubernetes cluster you are currently connected you can use the following command you get a list of all registerd kubernetes clusters in your kubectl config file and to which you are currently connected (marked with a *)
+```
+ kubectl config get-contexts
+```
+
+To switch the Kubernetes cluster you just have to specify the server context or use the connection string which is provided by the google cloud console in the WebUI.
+```
+kubectl config use-context your-server-context
+```
+
+To get a list of all namespaces (ns):
+```
+kubectl get ns
+```
+
+To get a list of all pods running in a specific namespace use the -n flag or --namspace:
+```
+kubectl get pods -n your-namespace
+```
+
+When you know you are working a specific namespace for a while you can replace the current namespace with another one. This saves you time to not always have to specify the namespace for each interaction. However proceed with caution all commands will be executed within the specified namespace. Even yaml files which do not have the attribute namespace deffined.
+```
+kubectl config set-context --current --namespace=yournamespace
+```
+
+To get all services you can use the shortcut svc. Note: to expose a pod via a port to the outside of the cluster you have to do this via a service. Thus the ip settings are listed when viewing the service for them.
+```
+kubectl get svc
+```
+To not always have to expose a pod via port forwarding to the outside of the cluster you can make use of service from the type loadBalancer. This gives you automatically an external IP and lets you route the app via a internal to an external port for the external ip.
+
+```
+kubectl patch <SERVICE_NAME> -p '{"spec":{"type":"LoadBalancer"}}'
+```
+or if you want to specify which port you want to use you can do this with the following command
+```
+kubectl patch svc <SERVICE_NAME> -p '{"spec": {"ports": [{"port": 443,"targetPort": 443,"name": "https"},{"port": 80,"targetPort": 80,"name": "http"}],"type": "LoadBalancer"}}'
+```
 
 
