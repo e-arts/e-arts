@@ -8,8 +8,6 @@ on:
   push:
     branches:
         - "**"
- #   tags:
- #     - v*
   pull_request:
     branches:  
         - "**"
@@ -46,22 +44,6 @@ jobs:
         
       - name: Run black
         run: black .
-        
-      - name: test
-        run: |
-          echo ${{ github.event_name }}
-          echo ${{ github.ref_name }}
-          echo $github.event_name
-          echo github.ref_name
-          echo github.event_name
-          echo ithub.ref_name
-      
-      #- name: Run linters
-      #  uses: wearerequired/lint-action@v2
-      #  with:
-      #    black: true
-      #    flake8: true
-      #    continue_on_error: false
       
   test_code:
     name: Code testing
