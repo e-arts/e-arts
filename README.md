@@ -3,10 +3,10 @@
 ## Table of Contents
 
 1. [Introduction](#introduction)
+2. [Architecture](#architecture)
 3. [Used Technologies](#used-technologies)
 4. [Responsibilities](#responsibilities)
 5. [Milestones](#milestones)
-6. [Architecture](#architecture)
 7. [Continous Deployment workflow with ArgoCD and GKE](#continous-deployment-workflow-with-argocd-and-gke)
     1. [Github Workflow](#github-workflow)
     2. [ArgoCD](#argocd)
@@ -24,6 +24,10 @@ The pipeline is building in the following way:
 4. building a docker image and pushing it to Dockerhub --> after completion, automatic changes in the infrastructure repo
 5. ArgoCD detects changes in the config-repo and syncs the new desired state
 6. release of the new version in Kubernetes
+
+## Architecture 
+
+![GitOpsWorkflow](/ressources/GitOpsWorkflow.png)
 
 ## Used Technologies:
 - ArgoCD
@@ -44,9 +48,6 @@ The pipeline is building in the following way:
 - Automatical deployment via ArgoCD is deployed in the environments
 - Presentation of results incl. live demo
 
-## Architecture 
-
-![GitOpsWorkflow](/ressources/GitOpsWorkflow.png)
 
 ## Continous Deployment workflow with ArgoCD and GKE
 
