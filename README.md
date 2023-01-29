@@ -1,25 +1,19 @@
-# Introduction
+# Continous Deployment workflow with ArgoCD and GKE
 
-### Used Technologies:
-- ArgoCD
-- Kubernetes
-- Github/ Github Actions
-- Google Cloud
-- Dockerhub
-- Docker
+## Table of Contents
 
-### Responsibilities
-- Setup of staging and production environment in GKE (@Phillipe Sanio)
-- Setup of CI Pipeline (linting, testing) and using (pre-)release capabilities of Github to alter the configuration repositories (@Daniel Lettner)
-- Setup of ArgoCD environments in the the staging and production environment to automatically deploy the new (pre-)release versions (@Jakob Pühringer)
+1. [Introduction](#introduction)
+3. [Used Technologies](#used-technologies)
+4. [Responsibilities](#responsibilities)
+5. [Milestones](#milestones)
+6. [Architecture](#architecture)
+7. [Continous Deployment workflow with ArgoCD and GKE](#continous-deployment-workflow-with-argocd-and-gke)
+    1. [Github Workflow](#github-workflow)
+    2. [ArgoCD](#argocd)
+    3. [Deployment via Google Cloud (GKE)](#deployment-via-google-cloud-gke)
 
-### Milestones:
-- CI Pipeline
-- Kubernetes Environments are setup in Google Cloud
-- Automatical deployment via ArgoCD is deployed in the environments
-- Presentation of results incl. live demo
 
-### Description of desired state
+## Introduction
 
 The goal is to implement a CI/CD Pipeline for the e-arts project. Changes to the main branch or adding a tag should result in tirggering the CI Pipeline. The pipeline consists of linting the project via flake8 and black. Parallel to linting the process for testing the project is executed. If the pipeline is triggered by adding a release tag, the pipeline furthermore builds a new docker images and pushes it onto dockerhub. If release is tagged as prerelease the new Image version is written to the staging environment, otherwise the image is written to the production environment. There are 2 Kubernetes Cluster available: one for production and one for staging. Both environments have ArgoCD installed which is pointing to either the staging or production git repository. Releasing a new version of the "software", results in updating the environments.
  
@@ -31,13 +25,32 @@ The pipeline is building in the following way:
 5. ArgoCD detects changes in the config-repo and syncs the new desired state
 6. release of the new version in Kubernetes
 
-#### GitOps Workflow 
+## Used Technologies:
+- ArgoCD
+- Kubernetes
+- Github/ Github Actions
+- Google Cloud
+- Dockerhub
+- Docker
+
+## Responsibilities
+- Setup of staging and production environment in GKE (@Phillipe Sanio)
+- Setup of CI Pipeline (linting, testing) and using (pre-)release capabilities of Github to alter the configuration repositories (@Daniel Lettner)
+- Setup of ArgoCD environments in the the staging and production environment to automatically deploy the new (pre-)release versions (@Jakob Pühringer)
+
+## Milestones:
+- CI Pipeline
+- Kubernetes Environments are setup in Google Cloud
+- Automatical deployment via ArgoCD is deployed in the environments
+- Presentation of results incl. live demo
+
+## Architecture 
 
 ![GitOpsWorkflow](/ressources/GitOpsWorkflow.png)
 
-# Implementation
+# Continous Deployment workflow with ArgoCD and GKE
 
-## Github Workflow (@Daniel Lettner)
+## Github Workflow
 
 <img width="920" alt="image" src="https://user-images.githubusercontent.com/48688085/212771191-f20ca274-fdbb-4801-8ed5-aea725737d12.png">
 
@@ -515,7 +528,7 @@ spec:
 ```
 
 
-## Argo CD
+## ArgoCD
 
 Argo CD is used as a declarative, continuous delivery tool for Kubernetes and follows the GitOps pattern. The later means that
 Git repositories define the desired application state, e.g. when the Git repository differs in the state of the deployed
